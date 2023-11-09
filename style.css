@@ -21,6 +21,8 @@ body {
     flex-direction: column;
     min-height: 100vh;
     background-color: rgb(153, 186, 247);
+    background-image: url(img/calc_background.png);
+    background-size: 100% 100%;
 }
 
 .main-container {
