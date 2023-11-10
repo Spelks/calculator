@@ -33,8 +33,8 @@ body {
 }
 
 .calc-container {
-    height: 550px;
-    width: 370px;
+    height: 580px;
+    width: 380px;
     background-image: linear-gradient(darkgray, rgb(208, 208, 208));
     padding: 10px;
     border-radius: 10px;
@@ -84,10 +84,10 @@ body {
     font-size: 15px;
     padding: 10px;
     width: 40px;
-    border-radius: 100px;
     margin: 0px;
     background-color: #666;
     color: azure;
+    border-radius: 20px 0px 0px 20px;
 }
 
 .theme-toggle-light {
@@ -152,38 +152,29 @@ button:hover {
     display: flex;
 }
 
-.calc-num-btns {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.calc-top-btns {
-    display: flex;
-    flex-wrap: wrap;
-}
-
+.calc-num-btns,
+.calc-top-btns,
 .calc-sum-btns {
     display: flex;
     flex-wrap: wrap;
 }
 
-.calc-top-btns button {
-    flex: 1;
-}
-
-.calc-num-btns button {
-    flex: 1;
-}
-
+.calc-top-btns button,
+.calc-num-btns button,
 .calc-sum-btns button {
     flex: 1;
 }
 
 .calc-footer {
+    margin-top: 10px;
+    background-color: #bab9b9;
     display: flex;
     align-items: center;
-    gap: 20px;
-    padding-top: 10px;
+    justify-content: center;
+    gap: 10px;
+    padding-right: 20px;
     font-family: 'Satisfy', cursive;
     color: #666;
+    border: 2px solid #616161;
+    border-radius: 30px;
 }
