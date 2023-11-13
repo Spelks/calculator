@@ -3,7 +3,6 @@ currentDate.textContent = new Date().getFullYear();
 
 const setTheme = document.querySelector("body");
 const themeButton = document.querySelector(".theme-toggle");
-const mainBtn = document.querySelectorAll(".btn");
 const calcWindow = document.querySelector(".calc-window");
 const toggleMoon = document.querySelector(".calc-moon");
 const toggleSun = document.querySelector(".calc-sun");
