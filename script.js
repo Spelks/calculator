@@ -13,6 +13,11 @@ const delBtn = document.querySelector("[data-delete]");
 const equalsBtn = document.querySelector("[data-equals]");
 const operationBtn = document.querySelectorAll("[data-operation]");
 
+//first number, operator and secon number sent to the display
+const firstNum = 3;
+const operator = "/";
+const nextNum = 2;
+
 themeButton.addEventListener("click", changeTheme);
 calcWindow.textContent = numberKey();
 clearBtn.addEventListener("click", clearScreen);
@@ -31,6 +36,7 @@ function changeTheme() {
     calcWindow.classList.toggle("dark-window");
 }
 
+//Adds clicked text to screen
 function numberKey() {
     numBtn.forEach(item => {
         item.addEventListener("click", ()=> {
@@ -39,20 +45,17 @@ function numberKey() {
     })
 }
 
-function add(a, b) {
-    return a + b;
-}
+//operator functions
+function add(a, b) {return a + b;}
+function minus(a, b) {return a - b;}
+function multiply(a, b) {return a * b;}
+function divide(a, b) {return a / b;}
 
-function minus(a, b) {
-    return a - b;
-}
-
-function multiply(a, b) {
-    return a * b;
-}
-
-function divide(a, b) {
-    return a / b;
+function operate(firstNum, operator, nextNum) {
+if(operator === "+") return add(firstNum, nextNum);
+if(operator === "-") return minus(firstNum, nextNum);
+if(operator === "*") return multiply(firstNum, nextNum);
+if(operator === "/") return divide(firstNum, nextNum);
 }
 
 
