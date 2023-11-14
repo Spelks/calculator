@@ -21,7 +21,14 @@ const nextNum = 2;
 themeButton.addEventListener("click", changeTheme);
 calcWindow.textContent = numberKey();
 clearBtn.addEventListener("click", clearScreen);
+delBtn.addEventListener("click", deleteDisplay);
 
+//Removes a single number at a time
+function deleteDisplay() {
+    return calcWindow.textContent = calcWindow.textContent.slice(0, -1);
+}
+
+//Removes all data on screen
 function clearScreen() {
     calcWindow.textContent = "";
 }
