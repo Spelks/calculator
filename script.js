@@ -13,7 +13,7 @@ const delBtn = document.querySelector("[data-delete]");
 const equalsBtn = document.querySelector("[data-equals]");
 const operationBtn = document.querySelectorAll("[data-operation]");
 
-//first number, operator and secon number sent to the display
+//first number, operator and second number sent to the display
 const firstNum = 3;
 const operator = "/";
 const nextNum = 2;
@@ -56,7 +56,10 @@ function numberKey() {
 function add(a, b) {return a + b;}
 function minus(a, b) {return a - b;}
 function multiply(a, b) {return a * b;}
-function divide(a, b) {return a / b;}
+function divide(a, b) {
+    if(b !== 0) return a / b;
+    return alert("Well done. You destroyed the Universe");
+}
 
 function operate(firstNum, operator, nextNum) {
 if(operator === "+") return add(firstNum, nextNum);
