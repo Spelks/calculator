@@ -70,28 +70,30 @@ function operatorBtns() {
         op.addEventListener("click", ()=> {
             isSum = true;
             calcWindow.innerText += op.innerText;
+            operator = op.innerText;
         })
     })
 }
 
 function equalsSum() {
-    calcWindow.innerText = parseInt(firstNum) + parseInt(currentNum);
+    let result = operate(firstNum, operator, currentNum);
+    calcWindow.innerText = result;
 }
 
 //operator functions
-function add(a, b) {return a + b;}
-function minus(a, b) {return a - b;}
-function multiply(a, b) {return a * b;}
+function add(a, b) {return parseInt(a) + parseInt(b);}
+function minus(a, b) {return parseInt(a) - parseInt(b);}
+function multiply(a, b) {return parseInt(a) * parseInt(b);}
 function divide(a, b) {
-    if(b !== 0) return a / b;
+    if(b !== "0") return parseInt(a) / parseInt(b);
     return alert("Well done. You destroyed the Universe");
 }
 
-function operate(firstNum, operator, nextNum) {
-if(operator === "+") return add(firstNum, nextNum);
-if(operator === "-") return minus(firstNum, nextNum);
-if(operator === "*") return multiply(firstNum, nextNum);
-if(operator === "/") return divide(firstNum, nextNum);
+function operate(firstNum, operator, currentNum) {
+if(operator === "+") return add(firstNum, currentNum);
+if(operator === "−") return minus(firstNum, currentNum);
+if(operator === "×") return multiply(firstNum, currentNum);
+if(operator === "÷") return divide(firstNum, currentNum);
 }
 
 
