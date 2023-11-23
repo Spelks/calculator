@@ -14,14 +14,18 @@ const equalsBtn = document.querySelector("[data-equals]");
 const operationBtn = document.querySelectorAll("[data-operation]");
 
 //first number, operator and second number sent to the display
-const firstNum = 3;
-const operator = "/";
-const nextNum = 2;
+let firstNum = "";
+let operator = "";
+let currentNum = "";
+let isSum = false;
 
 themeButton.addEventListener("click", changeTheme);
-calcWindow.textContent = numberKey();
 clearBtn.addEventListener("click", clearScreen);
 delBtn.addEventListener("click", deleteDisplay);
+equalsBtn.addEventListener("click", equalsSum);
+
+calcWindow.textContent = numberBtns();
+operationBtn.textContent = operatorBtns();
 
 //Removes a single number at a time
 function deleteDisplay() {
@@ -31,6 +35,9 @@ function deleteDisplay() {
 //Removes all data on screen
 function clearScreen() {
     calcWindow.textContent = "";
+    firstNum = "";
+    currentNum = "";
+    isSum = false;
 }
 
 //Toggle between Light/Dark mode
@@ -44,12 +51,31 @@ function changeTheme() {
 }
 
 //Adds clicked text to screen
-function numberKey() {
-    numBtn.forEach(item => {
-        item.addEventListener("click", ()=> {
-            calcWindow.append(item.innerText);
+function numberBtns() {
+    numBtn.forEach(num => {
+        num.addEventListener("click", ()=> {
+            if(!isSum) {
+                firstNum += num.innerText;
+                calcWindow.innerText += num.innerText;
+            } else {
+                currentNum += num.innerText;
+                calcWindow.innerText += num.innerText;
+            }
         })
     })
+}
+
+function operatorBtns() {
+    operationBtn.forEach(op => {
+        op.addEventListener("click", ()=> {
+            isSum = true;
+            calcWindow.innerText += op.innerText;
+        })
+    })
+}
+
+function equalsSum() {
+    calcWindow.innerText = parseInt(firstNum) + parseInt(currentNum);
 }
 
 //operator functions
