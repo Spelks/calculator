@@ -1,21 +1,19 @@
 const currentDate = document.querySelector(".current-date");
-currentDate.textContent = new Date().getFullYear();
-
 const setTheme = document.querySelector("body");
 const themeButton = document.querySelector(".theme-toggle");
 const calcWindow = document.querySelector(".calc-window");
 const toggleMoon = document.querySelector(".calc-moon");
 const toggleSun = document.querySelector(".calc-sun");
-//Calculator Buttons
 const numBtn = document.querySelectorAll("[data-number]");
 const clearBtn = document.querySelector("[data-clear]");
 const delBtn = document.querySelector("[data-delete]");
 const equalsBtn = document.querySelector("[data-equals]");
 const operationBtn = document.querySelectorAll("[data-operation]");
 
-//first number, operator and second number sent to the display
+//first number, operator and current number sent to the display
 let firstNum = "";
-let operator = "";
+// let operator = "";
+let operator = undefined;
 let currentNum = "";
 let isSum = false;
 
@@ -23,9 +21,9 @@ themeButton.addEventListener("click", changeTheme);
 clearBtn.addEventListener("click", clearScreen);
 delBtn.addEventListener("click", deleteDisplay);
 equalsBtn.addEventListener("click", equalsSum);
-
 calcWindow.textContent = numberBtns();
 operationBtn.textContent = operatorBtns();
+currentDate.textContent = new Date().getFullYear();
 
 //Removes a single number at a time
 function deleteDisplay() {
@@ -37,6 +35,7 @@ function clearScreen() {
     calcWindow.textContent = "";
     firstNum = "";
     currentNum = "";
+    operator = undefined;
     isSum = false;
 }
 
@@ -54,6 +53,7 @@ function changeTheme() {
 function numberBtns() {
     numBtn.forEach(num => {
         num.addEventListener("click", ()=> {
+            // if(num === "." && num.includes(".")) return;
             if(!isSum) {
                 firstNum += num.innerText;
                 calcWindow.innerText += num.innerText;
@@ -68,6 +68,7 @@ function numberBtns() {
 function operatorBtns() {
     operationBtn.forEach(op => {
         op.addEventListener("click", ()=> {
+            if(firstNum === "") return; //Does not allow operator if no number has been selected.
             isSum = true;
             calcWindow.innerText += op.innerText;
             operator = op.innerText;
