@@ -81,11 +81,11 @@ function equalsSum() {
 }
 
 //operator functions
-function add(a, b) {return parseInt(a) + parseInt(b);}
-function minus(a, b) {return parseInt(a) - parseInt(b);}
-function multiply(a, b) {return parseInt(a) * parseInt(b);}
+function add(a, b) {return parseFloat(a) + parseFloat(b);}
+function minus(a, b) {return parseFloat(a) - parseFloat(b);}
+function multiply(a, b) {return parseFloat(a) * parseFloat(b);}
 function divide(a, b) {
-    if(b !== "0") return parseInt(a) / parseInt(b);
+    if(b !== "0") return parseFloat(a) / parseFloat(b);
     return alert("Well done. You destroyed the Universe");
 }
 
@@ -95,5 +95,3 @@ if(operator === "−") return minus(firstNum, currentNum);
 if(operator === "×") return multiply(firstNum, currentNum);
 if(operator === "÷") return divide(firstNum, currentNum);
 }
-
-
