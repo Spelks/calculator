@@ -27,7 +27,14 @@ currentDate.textContent = new Date().getFullYear();
 
 //Removes a single number at a time
 function deleteDisplay() {
-    return calcWindow.textContent = calcWindow.textContent.slice(0, -1);
+    if(firstNum === "" || !operator) {
+        calcWindow.textContent = calcWindow.textContent.slice(0, -1);
+        firstNum = calcWindow.textContent;
+    } else if(currentNum || operator) {
+        if(currentNum === "") return
+        calcWindow.textContent = calcWindow.textContent.slice(0, -1);
+        currentNum = currentNum.slice(0, -1);
+    }
 }
 
 //Removes all data on screen
