@@ -11,37 +11,37 @@ const equalsBtn = document.querySelector("[data-equals]");
 const operationBtn = document.querySelectorAll("[data-operation]");
 
 //first number, operator and current number sent to the display
-let firstNum = "";
-// let operator = "";
+let initialOperand = "";
 let operator = undefined;
-let currentNum = "";
+let currentOperand = "";
 let isSum = false;
 
 themeButton.addEventListener("click", changeTheme);
 clearBtn.addEventListener("click", clearScreen);
 delBtn.addEventListener("click", deleteDisplay);
 equalsBtn.addEventListener("click", equalsSum);
+
 calcWindow.textContent = numberBtns();
 operationBtn.textContent = operatorBtns();
 currentDate.textContent = new Date().getFullYear();
 
-//Removes a single number at a time
+//Removes a single number at a time on active variable
 function deleteDisplay() {
-    if(firstNum === "" || !operator) {
+    if(initialOperand === "" || !operator) {
         calcWindow.textContent = calcWindow.textContent.slice(0, -1);
-        firstNum = calcWindow.textContent;
-    } else if(currentNum || operator) {
-        if(currentNum === "") return
+        initialOperand = calcWindow.textContent;
+    } else if(currentOperand || operator) {
+        if(currentOperand === "") return
         calcWindow.textContent = calcWindow.textContent.slice(0, -1);
-        currentNum = currentNum.slice(0, -1);
+        currentOperand = currentOperand.slice(0, -1);
     }
 }
 
-//Removes all data on screen
+//Removes all data on screen and clears variables
 function clearScreen() {
     calcWindow.textContent = "";
-    firstNum = "";
-    currentNum = "";
+    initialOperand = "";
+    currentOperand = "";
     operator = undefined;
     isSum = false;
 }
@@ -52,7 +52,7 @@ function changeTheme() {
     toggleMoon.classList.toggle("calc-moon-hidden");
     toggleSun.classList.toggle("calc-sun");
     setTheme.classList.toggle("dark-background");
-    numBtn.forEach(item => item.classList.toggle("dark-btns"));
+    numBtn.forEach(button => button.classList.toggle("dark-btns"));
     calcWindow.classList.toggle("dark-window");
 }
 
@@ -62,10 +62,10 @@ function numberBtns() {
         num.addEventListener("click", ()=> {
             // if(num === "." && num.includes(".")) return;
             if(!isSum) {
-                firstNum += num.innerText;
+                initialOperand += num.innerText;
                 calcWindow.innerText += num.innerText;
             } else {
-                currentNum += num.innerText;
+                currentOperand += num.innerText;
                 calcWindow.innerText += num.innerText;
             }
         })
@@ -75,7 +75,7 @@ function numberBtns() {
 function operatorBtns() {
     operationBtn.forEach(op => {
         op.addEventListener("click", ()=> {
-            if(firstNum === "") return; //Does not allow operator if no number has been selected.
+            if(initialOperand === "") return; //Does not allow operator if no number has been selected.
             isSum = true;
             calcWindow.innerText += op.innerText;
             operator = op.innerText;
@@ -84,22 +84,16 @@ function operatorBtns() {
 }
 
 function equalsSum() {
-    let result = operate(firstNum, operator, currentNum);
+    let result = operate(initialOperand, operator, currentOperand);
     calcWindow.innerText = result;
 }
 
-//operator functions
-function add(a, b) {return parseFloat(a) + parseFloat(b);}
-function minus(a, b) {return parseFloat(a) - parseFloat(b);}
-function multiply(a, b) {return parseFloat(a) * parseFloat(b);}
-function divide(a, b) {
-    if(b !== "0") return parseFloat(a) / parseFloat(b);
+function operate(initialOperand, operator, currentOperand) {
+if(operator === "+") return parseFloat(initialOperand) + parseFloat(currentOperand);
+if(operator === "−") return parseFloat(initialOperand) - parseFloat(currentOperand);
+if(operator === "×") return parseFloat(initialOperand) * parseFloat(currentOperand);
+if(operator === "÷") {
+    if(currentOperand !== "0") return parseFloat(initialOperand) / parseFloat(currentOperand);
     return alert("Well done. You destroyed the Universe");
-}
-
-function operate(firstNum, operator, currentNum) {
-if(operator === "+") return add(firstNum, currentNum);
-if(operator === "−") return minus(firstNum, currentNum);
-if(operator === "×") return multiply(firstNum, currentNum);
-if(operator === "÷") return divide(firstNum, currentNum);
+    }
 }
