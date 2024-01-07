@@ -11,10 +11,9 @@ const equalsBtn = document.querySelector("[data-equals]");
 const operationBtn = document.querySelectorAll("[data-operation]");
 
 //first number, operator and current number sent to the display
-let initialOperand = "";
+let previousOperand = "";
 let operator = undefined;
 let currentOperand = "";
-let isSum = false;
 
 themeButton.addEventListener("click", changeTheme);
 clearBtn.addEventListener("click", clearScreen);
@@ -27,9 +26,9 @@ currentDate.textContent = new Date().getFullYear();
 
 //Removes a single number at a time on active variable
 function deleteDisplay() {
-    if(initialOperand === "" || !operator) {
+    if(previousOperand === "" || !operator) {
         calcWindow.textContent = calcWindow.textContent.slice(0, -1);
-        initialOperand = calcWindow.textContent;
+        previousOperand = calcWindow.textContent;
     } else if(currentOperand || operator) {
         if(currentOperand === "") return
         calcWindow.textContent = calcWindow.textContent.slice(0, -1);
@@ -40,10 +39,9 @@ function deleteDisplay() {
 //Removes all data on screen and clears variables
 function clearScreen() {
     calcWindow.textContent = "";
-    initialOperand = "";
+    previousOperand = "";
     currentOperand = "";
     operator = undefined;
-    isSum = false;
 }
 
 //Toggle between Light/Dark mode
@@ -56,18 +54,11 @@ function changeTheme() {
     calcWindow.classList.toggle("dark-window");
 }
 
-//Adds clicked text to screen
 function numberBtns() {
     numBtn.forEach(num => {
         num.addEventListener("click", ()=> {
-            // if(num === "." && num.includes(".")) return;
-            if(!isSum) {
-                initialOperand += num.innerText;
-                calcWindow.innerText += num.innerText;
-            } else {
-                currentOperand += num.innerText;
-                calcWindow.innerText += num.innerText;
-            }
+            currentOperand += num.innerText;
+            calcWindow.innerText += num.innerText;
         })
     })
 }
@@ -75,8 +66,14 @@ function numberBtns() {
 function operatorBtns() {
     operationBtn.forEach(op => {
         op.addEventListener("click", ()=> {
-            if(initialOperand === "") return; //Does not allow operator if no number has been selected.
-            isSum = true;
+            if(currentOperand === "" && previousOperand === "") return; //Does not allow operator if no number has been selected.
+            if(currentOperand !== "" && previousOperand !== "") {
+                previousOperand = operate(previousOperand, operator, currentOperand);
+                currentOperand = "";
+            } else if (currentOperand !== "") {
+                previousOperand = currentOperand;
+                currentOperand = "";
+            }
             calcWindow.innerText += op.innerText;
             operator = op.innerText;
         })
@@ -84,16 +81,16 @@ function operatorBtns() {
 }
 
 function equalsSum() {
-    let result = operate(initialOperand, operator, currentOperand);
+    let result = operate(previousOperand, operator, currentOperand);
     calcWindow.innerText = result;
 }
 
-function operate(initialOperand, operator, currentOperand) {
-if(operator === "+") return parseFloat(initialOperand) + parseFloat(currentOperand);
-if(operator === "−") return parseFloat(initialOperand) - parseFloat(currentOperand);
-if(operator === "×") return parseFloat(initialOperand) * parseFloat(currentOperand);
+function operate(previousOperand, operator, currentOperand) {
+if(operator === "+") return parseFloat(previousOperand) + parseFloat(currentOperand);
+if(operator === "−") return parseFloat(previousOperand) - parseFloat(currentOperand);
+if(operator === "×") return parseFloat(previousOperand) * parseFloat(currentOperand);
 if(operator === "÷") {
-    if(currentOperand !== "0") return parseFloat(initialOperand) / parseFloat(currentOperand);
+    if(currentOperand !== "0") return parseFloat(previousOperand) / parseFloat(currentOperand);
     return alert("Well done. You destroyed the Universe");
     }
 }
