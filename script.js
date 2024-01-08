@@ -58,6 +58,7 @@ function changeTheme() {
 function numberBtns() {
     numBtn.forEach(num => {
         num.addEventListener("click", ()=> {
+            if(num.innerText === "." && currentOperand.includes(".")) return;
             if (isEquals && calcWindow.innerText !== "ERROR!") return;
             if(calcWindow.innerText === "ERROR!" || calcWindow.innerText === "0") {
                 previousOperand = "";
@@ -76,6 +77,9 @@ function operatorBtns() {
         op.addEventListener("click", ()=> {
             isEquals = false;
             if(currentOperand === "" && previousOperand === "" || calcWindow.innerText === "ERROR!") return;
+            if(calcWindow.innerText.endsWith(operator)) {
+                calcWindow.textContent = calcWindow.textContent.slice(0, -1);
+            }
             if(currentOperand !== "" && previousOperand !== "") {
                 previousOperand = operate(previousOperand, operator, currentOperand);
                 currentOperand = "";
@@ -97,10 +101,10 @@ function equalsSum() {
 
 function operate(previousOperand, operator, currentOperand) {
     isEquals = false;
-if(operator === "+") return parseFloat(previousOperand) + parseFloat(currentOperand);
-if(operator === "−") return parseFloat(previousOperand) - parseFloat(currentOperand);
-if(operator === "×") return parseFloat(previousOperand) * parseFloat(currentOperand);
-if(operator === "÷") {
+    if(operator === "+") return parseFloat(previousOperand) + parseFloat(currentOperand);
+    if(operator === "−") return parseFloat(previousOperand) - parseFloat(currentOperand);
+    if(operator === "×") return parseFloat(previousOperand) * parseFloat(currentOperand);
+    if(operator === "÷") {
     if(currentOperand !== "0") return parseFloat(previousOperand) / parseFloat(currentOperand);
     return calcWindow.textContent = "ERROR!";
     }
