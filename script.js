@@ -14,18 +14,22 @@ const operationBtn = document.querySelectorAll("[data-operation]");
 let previousOperand = "";
 let operator = undefined;
 let currentOperand = "";
+let isEquals = false;
 
 themeButton.addEventListener("click", changeTheme);
 clearBtn.addEventListener("click", clearScreen);
 delBtn.addEventListener("click", deleteDisplay);
 equalsBtn.addEventListener("click", equalsSum);
 
-calcWindow.textContent = numberBtns();
-operationBtn.textContent = operatorBtns();
+calcWindow.textContent = "0";
 currentDate.textContent = new Date().getFullYear();
+
+numberBtns();
+operatorBtns()
 
 //Removes a single number at a time on active variable
 function deleteDisplay() {
+    if (isEquals) return;
     if (currentOperand !== "") {
         calcWindow.textContent = calcWindow.textContent.slice(0, -1);
         currentOperand = currentOperand.slice(0, -1);
@@ -34,10 +38,11 @@ function deleteDisplay() {
 
 //Removes all data on screen and clears variables
 function clearScreen() {
-    calcWindow.textContent = "";
+    calcWindow.textContent = "0";
     previousOperand = "";
     currentOperand = "";
     operator = undefined;
+    isEquals = false;
 }
 
 //Toggle between Light/Dark mode
@@ -53,10 +58,12 @@ function changeTheme() {
 function numberBtns() {
     numBtn.forEach(num => {
         num.addEventListener("click", ()=> {
-            if(calcWindow.innerText === "ERROR!") {
+            if (isEquals && calcWindow.innerText !== "ERROR!") return;
+            if(calcWindow.innerText === "ERROR!" || calcWindow.innerText === "0") {
                 previousOperand = "";
                 currentOperand = "";
                 calcWindow.innerText = currentOperand;
+                isEquals = false;
             }
             currentOperand += num.innerText;
             calcWindow.innerText += num.innerText;
@@ -67,7 +74,8 @@ function numberBtns() {
 function operatorBtns() {
     operationBtn.forEach(op => {
         op.addEventListener("click", ()=> {
-            if(currentOperand === "" && previousOperand === "") return; //Does not allow operator if no number has been selected.
+            isEquals = false;
+            if(currentOperand === "" && previousOperand === "" || calcWindow.innerText === "ERROR!") return;
             if(currentOperand !== "" && previousOperand !== "") {
                 previousOperand = operate(previousOperand, operator, currentOperand);
                 currentOperand = "";
@@ -84,9 +92,11 @@ function operatorBtns() {
 function equalsSum() {
     let result = operate(previousOperand, operator, currentOperand);
     calcWindow.innerText = result;
+    isEquals = true;
 }
 
 function operate(previousOperand, operator, currentOperand) {
+    isEquals = false;
 if(operator === "+") return parseFloat(previousOperand) + parseFloat(currentOperand);
 if(operator === "−") return parseFloat(previousOperand) - parseFloat(currentOperand);
 if(operator === "×") return parseFloat(previousOperand) * parseFloat(currentOperand);
