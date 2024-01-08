@@ -26,11 +26,7 @@ currentDate.textContent = new Date().getFullYear();
 
 //Removes a single number at a time on active variable
 function deleteDisplay() {
-    if(previousOperand === "" || !operator) {
-        calcWindow.textContent = calcWindow.textContent.slice(0, -1);
-        previousOperand = calcWindow.textContent;
-    } else if(currentOperand || operator) {
-        if(currentOperand === "") return
+    if (currentOperand !== "") {
         calcWindow.textContent = calcWindow.textContent.slice(0, -1);
         currentOperand = currentOperand.slice(0, -1);
     }
@@ -57,6 +53,11 @@ function changeTheme() {
 function numberBtns() {
     numBtn.forEach(num => {
         num.addEventListener("click", ()=> {
+            if(calcWindow.innerText === "ERROR!") {
+                previousOperand = "";
+                currentOperand = "";
+                calcWindow.innerText = currentOperand;
+            }
             currentOperand += num.innerText;
             calcWindow.innerText += num.innerText;
         })
@@ -91,6 +92,6 @@ if(operator === "−") return parseFloat(previousOperand) - parseFloat(currentOp
 if(operator === "×") return parseFloat(previousOperand) * parseFloat(currentOperand);
 if(operator === "÷") {
     if(currentOperand !== "0") return parseFloat(previousOperand) / parseFloat(currentOperand);
-    return alert("Well done. You destroyed the Universe");
+    return calcWindow.textContent = "ERROR!";
     }
 }
