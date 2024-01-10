@@ -34,9 +34,10 @@ function deleteDisplay() {
         calcWindow.textContent = calcWindow.textContent.slice(0, -1);
         currentOperand = currentOperand.slice(0, -1);
     }
+    if (currentOperand === "") calcWindow.textContent = "0";
 }
 
-//Removes all data on screen and clears variables
+//Removes all data on screen and resets variables
 function clearScreen() {
     calcWindow.textContent = "0";
     previousOperand = "";
@@ -55,6 +56,7 @@ function changeTheme() {
     calcWindow.classList.toggle("dark-window");
 }
 
+//Handles numbers and decimal point
 function numberBtns() {
     numBtn.forEach(num => {
         num.addEventListener("click", ()=> {
@@ -72,28 +74,37 @@ function numberBtns() {
     })
 }
 
+//Handles operators
+// function operatorBtns() {
+//     operationBtn.forEach(op => {
+//         op.addEventListener("click", ()=> {
+//             isEquals = false;
+//             if(currentOperand === "" && previousOperand === "" || calcWindow.innerText === "ERROR!") return;
+//             if(calcWindow.innerText.endsWith(operator)) {
+//                 calcWindow.textContent = calcWindow.textContent.slice(0, -1);
+//             }
+//             if(currentOperand !== "" && previousOperand !== "") {
+//                 previousOperand = operate(previousOperand, operator, currentOperand);
+//                 currentOperand = "";
+//             } else if (currentOperand !== "") {
+//                 previousOperand = currentOperand;
+//                 currentOperand = "";
+//             }
+//             calcWindow.innerText += op.innerText;
+//             operator = op.innerText;
+//         })
+//     })
+// }
 function operatorBtns() {
     operationBtn.forEach(op => {
         op.addEventListener("click", ()=> {
-            isEquals = false;
-            if(currentOperand === "" && previousOperand === "" || calcWindow.innerText === "ERROR!") return;
-            if(calcWindow.innerText.endsWith(operator)) {
-                calcWindow.textContent = calcWindow.textContent.slice(0, -1);
-            }
-            if(currentOperand !== "" && previousOperand !== "") {
-                previousOperand = operate(previousOperand, operator, currentOperand);
-                currentOperand = "";
-            } else if (currentOperand !== "") {
-                previousOperand = currentOperand;
-                currentOperand = "";
-            }
-            calcWindow.innerText += op.innerText;
-            operator = op.innerText;
+            operatorBtnFunc(op.innerText);
         })
     })
 }
 
 function equalsSum() {
+    if (currentOperand === "" || previousOperand === "") return;
     let result = operate(previousOperand, operator, currentOperand);
     calcWindow.innerText = result;
     isEquals = true;
@@ -105,7 +116,45 @@ function operate(previousOperand, operator, currentOperand) {
     if(operator === "−") return parseFloat(previousOperand) - parseFloat(currentOperand);
     if(operator === "×") return parseFloat(previousOperand) * parseFloat(currentOperand);
     if(operator === "÷") {
-    if(currentOperand !== "0") return parseFloat(previousOperand) / parseFloat(currentOperand);
-    return calcWindow.textContent = "ERROR!";
+        if(currentOperand !== "0") return parseFloat(previousOperand) / parseFloat(currentOperand);
+        return calcWindow.textContent = "ERROR!";
     }
 }
+
+//Direct keyboard input
+window.addEventListener('keydown', keyboardInput)
+
+function keyboardInput(e) {
+    if (e.key >= 0 && e.key <= 9 || e.key === ".") keyboardInputNumber(e.key)
+    if (e.key === "=" || e.key === "Enter") equalsSum();
+    if (e.key === "Backspace") deleteDisplay();
+    if (e.key === "Escape" || e.key === "c") clearScreen();
+    if (e.key === "+" || e.key === "-" || e.key === "*" || e.key === "/") keyboardInputOperator(e.key);
+  }
+
+  function keyboardInputNumber(num) {
+    if(calcWindow.textContent === "0") calcWindow.textContent = "";
+    currentOperand += num;
+    calcWindow.textContent += num;
+  }
+
+  function keyboardInputOperator(op) {
+    op = operatorBtnFunc(op);
+  }
+
+  function operatorBtnFunc(op) {
+    isEquals = false;
+    if(currentOperand === "" && previousOperand === "" || calcWindow.innerText === "ERROR!") return;
+    if(calcWindow.innerText.endsWith(operator)) {
+        calcWindow.textContent = calcWindow.textContent.slice(0, -1);
+    }
+    if(currentOperand !== "" && previousOperand !== "") {
+        previousOperand = operate(previousOperand, operator, currentOperand);
+        currentOperand = "";
+    } else if (currentOperand !== "") {
+        previousOperand = currentOperand;
+        currentOperand = "";
+    }
+    operator = op;
+    calcWindow.innerText += op;
+  }
