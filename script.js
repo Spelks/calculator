@@ -60,12 +60,12 @@ function changeTheme() {
 function numberBtns() {
     numBtn.forEach(num => {
         num.addEventListener("click", () => {
-            if (num.innerText === "." && currentOperand.includes(".")) return;
-            if (isEquals && calcWindow.innerText !== "ERROR!" || isErrorDisplayed()) return;
+            if (num.textContent === "." && currentOperand.includes(".")) return;
+            if (isEquals && calcWindow.textContent !== "ERROR!" || isErrorDisplayed()) return;
             if (operator === "÷" && currentOperand === "0") displayError();
             if (calcWindow.textContent === "0") calcWindow.textContent = "";
-            currentOperand += num.innerText;
-            calcWindow.innerText += num.innerText;
+            currentOperand += num.textContent;
+            calcWindow.textContent += num.textContent;
         })
     })
 }
@@ -86,7 +86,7 @@ function isErrorDisplayed() {
 function operatorBtns() {
     operationBtn.forEach(op => {
         op.addEventListener("click", () => {
-            operatorLogic(op.innerText);
+            operatorLogic(op.textContent);
         })
     })
 }
@@ -95,7 +95,7 @@ function operatorBtns() {
 function equalsSum() {
     if (currentOperand === "" || previousOperand === "") return;
     let result = operate(previousOperand, operator, currentOperand);
-    calcWindow.innerText = result;
+    calcWindow.textContent = result;
     isEquals = true;
 }
 
@@ -144,7 +144,6 @@ function keyboardInputNumber(num) {
 
 // Handles operator input from the keyboard
 function keyboardInputOperator(keyOp) {
-    isEquals = false;
     if (isErrorDisplayed() || isEquals) return;
     let opSymbol = convertOperatorSymbol(keyOp);
     operatorLogic(opSymbol);
@@ -152,9 +151,9 @@ function keyboardInputOperator(keyOp) {
 
 // Handles both keyboard and Calculator button logic
 function operatorLogic(op) {
-    isEquals = false;
+    if (!isErrorDisplayed) isEquals = false;
     if (currentOperand === "" && previousOperand === "" || isErrorDisplayed()) return;
-    if (calcWindow.innerText.endsWith(operator)) {
+    if (calcWindow.textContent.endsWith(operator)) {
         calcWindow.textContent = calcWindow.textContent.slice(0, -1);
     }
     if (currentOperand !== "" && previousOperand !== "") {
@@ -165,5 +164,5 @@ function operatorLogic(op) {
         currentOperand = "";
     }
     operator = op;
-    calcWindow.innerText += op;
+    calcWindow.textContent += op;
 }
