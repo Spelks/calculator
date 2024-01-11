@@ -96,10 +96,16 @@ function operatorBtns() {
 
 // Handles the equals button operation
 function equalsSum() {
-    if (currentOperand === "" || previousOperand === "" || calcPrevious.textContent) return;
+    if (currentOperand === "" || previousOperand === "" || calcPrevious.textContent && isEquals) return;
     calcPrevious.textContent = calcWindow.textContent + "=";
     let result = operate(previousOperand, operator, currentOperand);
-    calcWindow.textContent = result;
+
+    if (Math.floor(result) !== result) {
+        calcWindow.textContent = parseFloat(result).toFixed(4);
+    } else {
+        calcWindow.textContent = result;
+    }
+
     isEquals = true;
 }
 
