@@ -96,7 +96,7 @@ function operatorBtns() {
 
 // Handles the equals button operation
 function equalsSum() {
-    if (currentOperand === "" || previousOperand === "") return;
+    if (currentOperand === "" || previousOperand === "" || calcPrevious.textContent) return;
     calcPrevious.textContent = calcWindow.textContent + "=";
     let result = operate(previousOperand, operator, currentOperand);
     calcWindow.textContent = result;
