@@ -1,7 +1,9 @@
 const currentDate = document.querySelector(".current-date");
 const setTheme = document.querySelector("body");
 const themeButton = document.querySelector(".theme-toggle");
+const calcPrevious = document.querySelector(".calc-previous");
 const calcWindow = document.querySelector(".calc-window");
+const calcMain = document.querySelector(".calc-main-window");
 const toggleMoon = document.querySelector(".calc-moon");
 const toggleSun = document.querySelector(".calc-sun");
 const numBtn = document.querySelectorAll("[data-number]");
@@ -39,6 +41,7 @@ function deleteDisplay() {
 
 // Clear all input and reset Calculator state
 function clearScreen() {
+    calcPrevious.textContent = "";
     calcWindow.textContent = "0";
     previousOperand = "";
     currentOperand = "";
@@ -53,7 +56,7 @@ function changeTheme() {
     toggleSun.classList.toggle("calc-sun");
     setTheme.classList.toggle("dark-background");
     numBtn.forEach(button => button.classList.toggle("dark-btns"));
-    calcWindow.classList.toggle("dark-window");
+    calcMain.classList.toggle("dark-window");
 }
 
 // Managing Calculator buttons
@@ -94,6 +97,7 @@ function operatorBtns() {
 // Handles the equals button operation
 function equalsSum() {
     if (currentOperand === "" || previousOperand === "") return;
+    calcPrevious.textContent = calcWindow.textContent + "=";
     let result = operate(previousOperand, operator, currentOperand);
     calcWindow.textContent = result;
     isEquals = true;
