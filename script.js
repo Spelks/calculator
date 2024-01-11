@@ -124,7 +124,10 @@ function operate(previousOperand, operator, currentOperand) {
 function keyboardInput(e) {
     if (e.key === "." && currentOperand.includes(".")) return;
     if (e.key >= 0 && e.key <= 9 || e.key === ".") keyboardInputNumber(e.key);
-    if (e.key === "=" || e.key === "Enter") equalsSum();
+    if (e.key === "=" || e.key === "Enter") { 
+        equalsSum();
+        e.preventDefault();
+    }
     if (e.key === "Backspace") deleteDisplay();
     if (e.key === "Escape" || e.key === "c") clearScreen();
     if (e.key === "+" || e.key === "-" || e.key === "*" || e.key === "/") { 
@@ -144,7 +147,7 @@ function keyboardInputNumber(num) {
 
 // Handles operator input from the keyboard
 function keyboardInputOperator(keyOp) {
-    if (isErrorDisplayed() || isEquals) return;
+    if (isErrorDisplayed()) return;
     let opSymbol = convertOperatorSymbol(keyOp);
     operatorLogic(opSymbol);
 }
