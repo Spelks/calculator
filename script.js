@@ -100,12 +100,15 @@ function equalsSum() {
     calcPrevious.textContent = calcWindow.textContent + "=";
     let result = operate(previousOperand, operator, currentOperand);
 
-    if (Math.floor(result) !== result) {
-        calcWindow.textContent = parseFloat(result).toFixed(4);
+    if (operator === "÷" && currentOperand === "0") {
+        calcWindow.textContent = "ERROR!";
     } else {
-        calcWindow.textContent = result;
+        if (Math.floor(result) !== result) {
+            calcWindow.textContent = parseFloat(result).toFixed(4);
+        } else {
+            calcWindow.textContent = result;
+        }
     }
-
     isEquals = true;
 }
 
@@ -124,10 +127,7 @@ function operate(previousOperand, operator, currentOperand) {
     if (operator === "+") return parseFloat(previousOperand) + parseFloat(currentOperand);
     if (operator === "−") return parseFloat(previousOperand) - parseFloat(currentOperand);
     if (operator === "×") return parseFloat(previousOperand) * parseFloat(currentOperand);
-    if (operator === "÷") {
-        if (currentOperand !== "0") return parseFloat(previousOperand) / parseFloat(currentOperand);
-        return calcWindow.textContent = "ERROR!";
-    }
+    if (operator === "÷") return parseFloat(previousOperand) / parseFloat(currentOperand);
 }
 
 // Handles keyboard input
