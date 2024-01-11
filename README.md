@@ -11,8 +11,13 @@ Live Site: https://spelks.github.io/calculator/
 - Accepts decimal points
 - Rejects division by 0!
 - 'Clear' and 'Delete' buttons
-- Direct keyboard functionality (Coming soon!)
-- Subtle keypress sound effects (Coming soon!)
+- Keyboard Responsiveness:
+  * `0 - 9`: for available numbers
+  * `c` or `Escape`: to clear screen
+  * `Backspace`: to delete single characters
+  * `=` or `Enter`: to calculate numbers
+  * `+`, `-`, `*`, `/`: for operators
+
 
 ## Calculator Preview
 <img src="img/calculator-preview.png" style="width: 80%;" alt="Calculator preview image">
