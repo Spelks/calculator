@@ -64,9 +64,12 @@ function numberBtns() {
     numBtn.forEach(num => {
         num.addEventListener("click", () => {
             if (num.textContent === "." && currentOperand.includes(".")) return;
-            if (isEquals && calcWindow.textContent !== "ERROR!" || isErrorDisplayed()) return;
             if (operator === "÷" && currentOperand === "0") displayError();
             if (calcWindow.textContent === "0") calcWindow.textContent = "";
+            if (isEquals || isErrorDisplayed()) {
+                clearScreen();
+                calcWindow.textContent = "";
+            }
             currentOperand += num.textContent;
             calcWindow.textContent += num.textContent;
         })
@@ -148,9 +151,12 @@ function keyboardInput(e) {
 
 // Handles number input from the keyboard
 function keyboardInputNumber(num) {
-    if (isErrorDisplayed() || isEquals) return;
     if (calcWindow.textContent === "0") calcWindow.textContent = "";
     if (operator === "÷" && currentOperand === "0") displayError();
+    if (isEquals || isErrorDisplayed()) {
+        clearScreen();
+        calcWindow.textContent = "";
+    }
     currentOperand += num;
     calcWindow.textContent += num;
 }
