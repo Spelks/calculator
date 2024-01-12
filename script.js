@@ -151,7 +151,6 @@ function keyboardInput(e) {
 // Handles number input from the keyboard
 function keyboardInputNumber(num) {
     if (calcWindow.textContent === "0") calcWindow.textContent = "";
-    if (operator === "÷" && currentOperand === "0") displayError();
     if (isEquals || isErrorDisplayed()) {
         clearScreen();
         calcWindow.textContent = "";
