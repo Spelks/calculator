@@ -103,13 +103,9 @@ function equalsSum() {
     let result = operate(previousOperand, operator, currentOperand);
 
     if (operator === "÷" && currentOperand === "0") {
-        calcWindow.textContent = "ERROR!";
+        displayError();
     } else {
-        if (Math.floor(result) !== result) {
-            calcWindow.textContent = parseFloat(result).toFixed(4);
-        } else {
-            calcWindow.textContent = result;
-        }
+        calcWindow.textContent = parseFloat(result.toFixed(3));
     }
     isEquals = true;
 }
