@@ -64,7 +64,6 @@ function numberBtns() {
     numBtn.forEach(num => {
         num.addEventListener("click", () => {
             if (num.textContent === "." && currentOperand.includes(".")) return;
-            if (operator === "÷" && currentOperand === "0") displayError();
             if (calcWindow.textContent === "0") calcWindow.textContent = "";
             if (isEquals || isErrorDisplayed()) {
                 clearScreen();
