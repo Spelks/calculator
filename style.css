@@ -34,7 +34,7 @@ body {
 
 .calc-container {
     height: 600px;
-    width: 380px;
+    width: 385px;
     background-image: linear-gradient(darkgray, rgb(208, 208, 208));
     padding: 10px;
     border-radius: 10px;
@@ -121,7 +121,7 @@ body {
 /* End of Dark theme */
 
 button {
-    padding: 20px 26px;
+    padding: 20px 27px;
     border-radius: 20px;
     border: 0px;
     margin: 2px;
