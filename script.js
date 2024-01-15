@@ -26,8 +26,12 @@ window.addEventListener('keydown', keyboardInput);
 calcWindow.textContent = "0";
 currentDate.textContent = new Date().getFullYear();
 
+// Listen for changes in the system theme preference
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', changeTheme);
+
 numberBtns();
 operatorBtns();
+applyInitialTheme();
 
 // Delete the last digit from the current operand
 function deleteDisplay() {
@@ -179,3 +183,12 @@ function operatorLogic(op) {
     operator = op;
     calcWindow.textContent += op;
 }
+
+// Apply initial theme based on system preference
+function applyInitialTheme() {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        changeTheme(); // Toggle to dark mode
+    }
+}
+
+
