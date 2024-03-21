@@ -1,66 +1,44 @@
-const currentDate = document.querySelector(".current-date");
-const setTheme = document.querySelector("body");
-const themeButton = document.querySelector(".theme-toggle");
-const calcPrevious = document.querySelector(".calc-previous");
-const calcWindow = document.querySelector(".calc-window");
-const calcMain = document.querySelector(".calc-main-window");
-const toggleMoon = document.querySelector(".calc-moon");
-const toggleSun = document.querySelector(".calc-sun");
+const calcPrevious = document.querySelector("[data-previous-display]");
+const calcCurrent = document.querySelector("[data-current-display]");
 const numBtn = document.querySelectorAll("[data-number]");
 const clearBtn = document.querySelector("[data-clear]");
 const delBtn = document.querySelector("[data-delete]");
 const equalsBtn = document.querySelector("[data-equals]");
-const operationBtn = document.querySelectorAll("[data-operation]");
+const operatorBtn = document.querySelectorAll("[data-operator]");
 
 let previousOperand = "";
 let operator = undefined;
 let currentOperand = "";
 let isEquals = false;
 
-themeButton.addEventListener("click", changeTheme);
 clearBtn.addEventListener("click", clearScreen);
 delBtn.addEventListener("click", deleteDisplay);
 equalsBtn.addEventListener("click", equalsSum);
 window.addEventListener('keydown', keyboardInput);
 
-calcWindow.textContent = "0";
-currentDate.textContent = new Date().getFullYear();
-
-// Listen for changes in the system theme preference
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', changeTheme);
+calcCurrent.textContent = "0";
 
 numberBtns();
 operatorBtns();
-applyInitialTheme();
 
 // Delete the last digit from the current operand
 function deleteDisplay() {
     if (isEquals) return;
     if (currentOperand !== "") {
-        calcWindow.textContent = calcWindow.textContent.slice(0, -1);
+        calcCurrent.textContent = calcCurrent.textContent.slice(0, -1);
         currentOperand = currentOperand.slice(0, -1);
     }
-    if (currentOperand === "" && previousOperand === "") calcWindow.textContent = "0";
+    if (currentOperand === "" && previousOperand === "") calcCurrent.textContent = "0";
 }
 
 // Clear all input and reset Calculator state
 function clearScreen() {
     calcPrevious.textContent = "";
-    calcWindow.textContent = "0";
+    calcCurrent.textContent = "0";
     previousOperand = "";
     currentOperand = "";
     operator = undefined;
     isEquals = false;
-}
-
-// Toggle between light and dark themes
-function changeTheme() {
-    themeButton.classList.toggle("theme-toggle-light");
-    toggleMoon.classList.toggle("calc-moon-hidden");
-    toggleSun.classList.toggle("calc-sun");
-    setTheme.classList.toggle("dark-background");
-    numBtn.forEach(button => button.classList.toggle("dark-btns"));
-    calcMain.classList.toggle("dark-window");
 }
 
 // Managing Calculator buttons
@@ -68,20 +46,21 @@ function numberBtns() {
     numBtn.forEach(num => {
         num.addEventListener("click", () => {
             if (num.textContent === "." && currentOperand.includes(".")) return;
-            if (calcWindow.textContent === "0") calcWindow.textContent = "";
+            // if (calcCurrent.textContent === "0") calcCurrent.textContent = "";
+            if (calcCurrent.textContent === "0" && !num.textContent.includes(".")) calcCurrent.textContent = "";
             if (isEquals || isErrorDisplayed()) {
                 clearScreen();
-                calcWindow.textContent = "";
+                calcCurrent.textContent = "";
             }
             currentOperand += num.textContent;
-            calcWindow.textContent += num.textContent;
+            calcCurrent.textContent += num.textContent;
         })
     })
 }
 
 // Display an error message in calculator
 function displayError() {
-    calcWindow.textContent = "ERROR!";
+    calcCurrent.textContent = "ERROR!";
     currentOperand = "";
     previousOperand = "";
     operator = undefined;
@@ -89,11 +68,11 @@ function displayError() {
 }
 
 function isErrorDisplayed() {
-    return calcWindow.textContent === "ERROR!";
+    return calcCurrent.textContent === "ERROR!";
 }
 
 function operatorBtns() {
-    operationBtn.forEach(op => {
+    operatorBtn.forEach(op => {
         op.addEventListener("click", () => {
             operatorLogic(op.textContent);
         })
@@ -103,13 +82,13 @@ function operatorBtns() {
 // Handles the equals button operation
 function equalsSum() {
     if (currentOperand === "" || previousOperand === "" || calcPrevious.textContent && isEquals) return;
-    calcPrevious.textContent = calcWindow.textContent + "=";
+    calcPrevious.textContent = calcCurrent.textContent + "=";
     let result = operate(previousOperand, operator, currentOperand);
 
     if (operator === "÷" && currentOperand === "0") {
         displayError();
     } else {
-        calcWindow.textContent = parseFloat(result.toFixed(3));
+        calcCurrent.textContent = parseFloat(result.toFixed(3));
     }
     isEquals = true;
 }
@@ -150,13 +129,14 @@ function keyboardInput(e) {
 
 // Handles number input from the keyboard
 function keyboardInputNumber(num) {
-    if (calcWindow.textContent === "0") calcWindow.textContent = "";
+    // if (calcCurrent.textContent === "0") calcCurrent.textContent = "";
+    if (calcCurrent.textContent === "0" && num !== ".") calcCurrent.textContent = "";
     if (isEquals || isErrorDisplayed()) {
         clearScreen();
-        calcWindow.textContent = "";
+        calcCurrent.textContent = "";
     }
     currentOperand += num;
-    calcWindow.textContent += num;
+    calcCurrent.textContent += num;
 }
 
 // Handles operator input from the keyboard
@@ -170,8 +150,8 @@ function keyboardInputOperator(keyOp) {
 function operatorLogic(op) {
     if (!isErrorDisplayed) isEquals = false;
     if (currentOperand === "" && previousOperand === "" || isErrorDisplayed()) return;
-    if (calcWindow.textContent.endsWith(operator)) {
-        calcWindow.textContent = calcWindow.textContent.slice(0, -1);
+    if (calcCurrent.textContent.endsWith(operator)) {
+        calcCurrent.textContent = calcCurrent.textContent.slice(0, -1);
     }
     if (currentOperand !== "" && previousOperand !== "") {
         previousOperand = operate(previousOperand, operator, currentOperand);
@@ -181,14 +161,5 @@ function operatorLogic(op) {
         currentOperand = "";
     }
     operator = op;
-    calcWindow.textContent += op;
+    calcCurrent.textContent += op;
 }
-
-// Apply initial theme based on system preference
-function applyInitialTheme() {
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        changeTheme(); // Toggle to dark mode
-    }
-}
-
-
