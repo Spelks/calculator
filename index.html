@@ -2,60 +2,37 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Calculator</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap">
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
+    <title>Calculator</title>
 </head>
 <body>
-    <section class="main-container">
-        <div class="calc-container">
-            <div class="calc-main-window">
-                <div class="calc-previous"></div>
-                <div class="calc-window"></div>
-            </div>
-            <div class="calc-btns">
-
-                <div class="calc-main-btns">
-                    <div class="calc-top-btns">
-                        <button data-clear class="clear-btn">AC</button>
-                        <button data-delete class="del-btn">DEL</button>
-                    </div>
-
-                    <div class="calc-num-btns">
-                        <button data-number>7</button>
-                        <button data-number>8</button>
-                        <button data-number>9</button>
-                        <button data-number>4</button>
-                        <button data-number>5</button>
-                        <button data-number>6</button>
-                        <button data-number>1</button>
-                        <button data-number>2</button>
-                        <button data-number>3</button>
-                        <button data-number>.</button>
-                        <button data-number>0</button>
-                        <button data-equals class="equ-btn">&equals;</button>
-                    </div>
-                </div>
-
-                <div class="calc-sum-btns">
-                    <button data-operation>&plus;</button>
-                    <button data-operation>&minus;</button>
-                    <button data-operation>&times;</button>
-                    <button data-operation>&divide;</button>
-                </div>
-
-            </div>
-            <div class="calc-footer">
-                <button class="theme-toggle">
-                    <span class="calc-moon"><i class="fa fa-moon-o" aria-hidden="true"></i></span>
-                    <span class="calc-sun"><i class="fa fa-sun-o" aria-hidden="true"></i></span>
-                </button>
-                <p>Copyright &copy <span class="current-date"></span> Spelks </p>
-            </div>
+    <div class="calculator-container">
+        <div class="calculator-display">
+            <div data-previous-display class="previous-display"></div>
+            <div data-current-display class="current-display"></div>
         </div>
-    </section>
+        <button type="button" data-clear class="all-clear">AC</button>
+        <button type="button" data-delete class="delete"><img src="img/backspace.svg" alt="Delete Button"></button>
+        <button type="button" data-operator class="operator">÷</button>
+        <button type="button" data-number>7</button>
+        <button type="button" data-number>8</button>
+        <button type="button" data-number>9</button>
+        <button type="button" data-operator class="operator">×</button>
+        <button type="button" data-number>4</button>
+        <button type="button" data-number>5</button>
+        <button type="button" data-number>6</button>
+        <button type="button" data-operator class="operator">+</button>
+        <button type="button" data-number>1</button>
+        <button type="button" data-number>2</button>
+        <button type="button" data-number>3</button>
+        <button type="button" data-operator class="operator">−</button>
+        <button type="button" data-number>.</button>
+        <button type="button" data-number>0</button>
+        <button type="button" data-equals class="equals">=</button>
+    </div>
 </body>
 </html>
