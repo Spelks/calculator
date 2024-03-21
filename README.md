@@ -4,8 +4,6 @@
 This is an easy to use Calculator with simple standard functionality. Created without using eval() function.
 It is a basic calculator and does not follow PEMDAS/BODMAS, but uses sequential order of operations.
 
-Live Site: https://spelks.github.io/calculator/
-
 ## Features
 - Able to properly chain calculations (e.g 2 + 3 - 5 etc)
 - Light and Dark mode toggle button (Should also be set automatically based on browser preference)
